@@ -1,8 +1,10 @@
 import {createElement} from '../render.js';
-import { points } from '../mock/points.js';
+//import { points } from '../mock/points.js';
 
-function createPointView(point) {
+function createPointView(point, destinations) {
   const {type, isFavorite} = point;
+  const currentDestion = destinations.find((destination) => destination.id === point.destination);
+  console.log('destinations', destinations);
 
   return `<li class="trip-events__item">
   <div class="event">
@@ -10,7 +12,7 @@ function createPointView(point) {
     <div class="event__type">
       <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
     </div>
-    <h3 class="event__title">Taxi Amsterdam</h3>
+    <h3 class="event__title">${type} ${currentDestion.name}</h3>
     <div class="event__schedule">
       <p class="event__time">
         <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
@@ -43,14 +45,14 @@ function createPointView(point) {
 </li>`;
 }
 
-export default class RoutePointView {
-  constructor(point) {
+export default class PointView {
+  constructor(point, destinations) {
     this.point = point;
-
+    this.destinations = destinations;
   }
 
   getTemplate() {
-    return createPointView(this.point);
+    return createPointView(this.point, this.destinations);
   }
 
   getElement() {
