@@ -31,7 +31,7 @@ export default class SortView {
   }
 
   getElement() {
-    if (!this.element) {
+    if(!this.element) {
       this.element = createElement(this.getTemplate());
     }
     return this.element;

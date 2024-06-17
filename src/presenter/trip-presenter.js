@@ -3,26 +3,30 @@ import SortView from '../view/sort-view.js';
 import CreateFormView from '../view/create-form-view.js';
 import EditFormView from '../view/edit-form-view.js';
 import FiltersView from '../view/filters-view.js';
-import RoutePointView from '../view/route-point-view.js';
+import PointView from '../view/point-view.js';
+//import { points } from '../mock/points.js';
+//import { destinations } from '../mock/points.js';
 
 export default class TripPresenter {
-  pointComponent = new RoutePointView();
+  sortComponent = new SortView();
+  filterComponent = new FiltersView();
 
-  constructor({eventsContainer}) {
+  constructor({eventsContainer, pointModel}) {
     this.eventsContainer = eventsContainer;
+    this.pointModel = pointModel;
   }
 
-
   init() {
-    render(new SortView(), this.eventsContainer);
-    render(this.pointComponent, this.eventsContainer);
-    render(new EditFormView(), this.pointComponent.getElement());
-    render(new FiltersView(), this.eventsContainer);
+    const points = this.pointModel.getPoints();
+    const destinations = this.pointModel.getDestinations();
 
-    for (let i = 0; i < 3; i++) {
-      render(new RoutePointView(), this.pointComponent.getElement());
-    }
+    render(this.sortComponent, this.eventsContainer);
+    render(this.filterComponent, this.eventsContainer);
+    render(new EditFormView(), this.eventsContainer);
+    render(new CreateFormView(), this.eventsContainer);
 
-    render(new CreateFormView(), this.pointComponent.getElement());
+    points.forEach((point) => {
+      render(new PointView(point, destinations), this.eventsContainer);
+    });
   }
 }
