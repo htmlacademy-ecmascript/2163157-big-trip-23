@@ -5,9 +5,11 @@ import EditFormView from '../view/edit-form-view.js';
 import FiltersView from '../view/filters-view.js';
 import PointView from '../view/point-view.js';
 //import { points } from '../mock/points.js';
+//import { destinations } from '../mock/points.js';
 
 export default class TripPresenter {
   sortComponent = new SortView();
+  filterComponent = new FiltersView();
 
   constructor({eventsContainer, pointModel}) {
     this.eventsContainer = eventsContainer;
@@ -19,16 +21,12 @@ export default class TripPresenter {
     const destinations = this.pointModel.getDestinations();
 
     render(this.sortComponent, this.eventsContainer);
-    render(new PointView(), this.eventsContainer.getElement());
-    render(new EditFormView(), this.pointComponent.getElement());
-    render(new FiltersView(), this.eventsContainer);
-    render(new CreateFormView(), this.pointComponent.getElement());
-
+    render(this.filterComponent, this.eventsContainer);
+    render(new EditFormView(), this.eventsContainer);
+    render(new CreateFormView(), this.eventsContainer);
 
     points.forEach((point) => {
-      render(new PointView(point, destinations), this.pointComponent.getElement());
+      render(new PointView(point, destinations), this.eventsContainer);
     });
-
-    //render(new CreateFormView(), this.pointComponent.getElement());
   }
 }

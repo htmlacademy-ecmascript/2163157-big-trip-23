@@ -1,10 +1,11 @@
 import {createElement} from '../render.js';
-//import { points } from '../mock/points.js';
 
 function createPointView(point, destinations) {
   const {type, isFavorite} = point;
   const currentDestion = destinations.find((destination) => destination.id === point.destination);
-  console.log('destinations', destinations);
+
+  console.log(currentDestion.name);
+  console.log(destinations.name);
 
   return `<li class="trip-events__item">
   <div class="event">
@@ -12,7 +13,7 @@ function createPointView(point, destinations) {
     <div class="event__type">
       <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
     </div>
-    <h3 class="event__title">${type} ${currentDestion.name}</h3>
+    <h3 class="event__title">${type} ${(currentDestion.name)}</h3>
     <div class="event__schedule">
       <p class="event__time">
         <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
